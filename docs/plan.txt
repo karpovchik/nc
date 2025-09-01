@@ -1,0 +1,39 @@
+<<< nc - Numerical System >>>
+
+1) This program converts a number from one nc to another;
+2) A user will be offered to enter three numbers: num1 - that`ll be converted to num2,
+	nc1, nc2 - numerical systems of num1, num2 accordingly;
+
+What should be taken into account?
+1) num1, num2 must be unsigned integers;
+2) nc1, nc2 relate to [2-16];
+
+Approximate program work:
+1) User input;
+2) Check user`s input;
+3) If "Wrong input" => abort();
+4) If "Good input" => continue calculations;
+5) After calcs, ask new input:
+	5.1) if "Yes" => new input;
+	5.2) if "No" => exit program;
+	5.3) if "Bad symbol" => ask again;
+
+Possible mistakes:
+1) num1 || num2 are negatives numbers -> invalid format;
+2) num1 || num2 contain invalid symbols -> invalid format;
+3) nc1 || nc2 are not in [2-16] -> invalid format;
+4) nc1 || nc2 contain invalid symbols -> invalid format;
+4) (num1 || num2) > max_double -> buffer overflow;
+
+The algorithm of convertion:
+1) Define nc1 and nc2:
+	1.1) if (nc1 == nc2): reenter input;
+	1.2) if (nc1 != 10 && nc2 == 10):
+		14A in 16th nc -> 1 * 16^2 + 4 * 16^1 + 10(A) * 16^0 = 330 in 10th nc;
+	1.3) if (nc1 == 10):
+		97 in 10th nc to ? in 16th nc -> 97 / 16 = 6, 97 % 16 = 1 => 61 in 16th nc;
+	1.4) if (nc1 != 10 && nc2 != 10):
+		- BC8 in 16th nc to ? in 9th nc:
+		- 11(B) * 16^2 + 12(C) * 16^1 + 8 * 16^0 = 3016 in 10th nc;
+		- 3016/9 = 335, 3016%9 = 1 -> 335/9 = 37, 335%9 = 2 -> 37/9 = 4, 37%9 = 1;
+		- BC8 in 16th nc is 4121 in 9th nc.
