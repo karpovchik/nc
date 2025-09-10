@@ -19,11 +19,14 @@ Approximate program work:
 	5.3) if "Bad symbol" => ask again;
 
 Possible mistakes:
-- 1) num1 contains invalid symbols -> invalid format;
++ 1) num1 contains invalid symbols -> invalid format;
 + 2) nc1 || nc2 are not in [2-16] -> invalid format;
 + 3) nc1 || nc2 contain invalid symbols -> invalid format;
 - 4) num1 > max_double -> buffer overflow;
-+ 5) symbols in num1 >= nc1 -> invalid format;
+- 5) symbols in num1 >= nc1 -> invalid format;
+
+Functions to check for mistakes:
+1) To define if invalid symbols in num1 -> use a strchr() func;
 
 The algorithm of convertion:
 1) Define nc1 and nc2:

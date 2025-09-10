@@ -11,82 +11,34 @@ constexpr double max_d = 29999999999999992;
 double check(char* s0_, short* nc1_, short* nc2_, short* c1_, short* c2_, double* num1_)
 {
 	char tmp = '0';
-	char* s1 = (char*)malloc(strlen(s0_));
+	char* str = (char*)malloc(strlen(s0_));
+	const char charset[] = "0123456789ABCDEFabcdef";	// available symbols
 	char* endptr;
 
-	for (int i = 0; s0_[i] != '\0'; ++i) { 
-		if (!isspace(s0_[i])) { s1[i] = s0_[i]; }
+	for (int i = 0; s0_[i] != '\0'; ++i) { 						// remove all spacing elements
+		if (!isspace(s0_[i])) { str[i] = s0_[i]; }
 	}
 
-	if (*c1_ != 1 || *c2_ != 1)
+	if (*c1_ != 1 || *c2_ != 1)									// check nces`s inputs are valid
 	{
 		printf("[Error] You entered a wrong symbol as a numerical system!\n");
 		abort();
 	}
-	if (*nc1_ < 2 || *nc1_ > 16 || *nc2_ < 2 || *nc2_ > 16)
+	if (*nc1_ < 2 || *nc1_ > 16 || *nc2_ < 2 || *nc2_ > 16)		// check range of nces
 	{
 		printf("[Error] This calculator supplies numerical systems from 2 to 16!\n");
 		abort();
 	}
 	
-	printf("\nlength: %d", strlen(s1));
-	for (int i = 0; i < s1[i] != '\0'; ++i)
+	for (int i = 0; str[i] != '\0'; ++i)
 	{
-		if (*nc1_ <= 15 && (s1[i] == 'F' || s1[i] == 'f')) {
-			printf("[Error] %dth numerical system doesn`t supply one of the symbol you entered!\n", *nc1_);
-			abort();
-		}	
-		if (*nc1_ <= 14 && (s1[i] == 'F' || s1[i] == 'f' || s1[i] == 'E' || s1[i] == 'e')) {
-			printf("[Error] %dth numerical system doesn`t supply one of the symbol you entered!\n", *nc1_);
-			abort();
-		}
-		if (*nc1_ <= 13 && (s1[i] == 'F' || s1[i] == 'f' || s1[i] == 'E' || s1[i] == 'e' || s1[i] == 'D' || s1[i] == 'd')) {
-			printf("[Error] %dth numerical system doesn`t supply one of the symbol you entered!\n", *nc1_);
-			abort();
-		}
-		if (*nc1_ <= 12 && (s1[i] == 'F' || s1[i] == 'f' || s1[i] == 'E' || s1[i] == 'e' || s1[i] == 'D' || s1[i] == 'd' ||
-			s1[i] == 'C' || s1[i] == 'c')) {
-			printf("[Error] %dth numerical system doesn`t supply one of the symbol you entered!\n", *nc1_);
-			abort();
-		}
-		if (*nc1_ <= 11 && (s1[i] == 'F' || s1[i] == 'f' || s1[i] == 'E' || s1[i] == 'e' || s1[i] == 'D' || s1[i] == 'd' || 
-			s1[i] == 'C' || s1[i] == 'c' || s1[i] == 'B' || s1[i] == 'b')) {
-			printf("[Error] %dth numerical system doesn`t supply one of the symbol you entered!\n", *nc1_);
-			abort();
-		}
-		if (*nc1_ <= 10 && (s1[i] == 'F' || s1[i] == 'f' || s1[i] == 'E' || s1[i] == 'e' || s1[i] == 'D' || s1[i] == 'd' || 
-			s1[i] == 'C' || s1[i] == 'c' || s1[i] == 'B' || s1[i] == 'b' || s1[i] == 'A' || s1[i] == 'a')) {
-			printf("[Error] %dth numerical system doesn`t supply one of the symbol you entered!\n", *nc1_);
-			abort();
-		}
-		tmp = s1[i];
-		if (atof(&tmp) != 0.0) {
-			printf("\ns1 %lf", atof(&tmp));
-			if (*nc1_ <= atof(&tmp)) {
-				printf("[Error] %dth numerical system doesn`t supply one of the symbol you entered!\n", *nc1_);
-				abort();
-			}
-		}
-		if (atof(&tmp) == 0.0 && (s1[i] != '0' || s1[i] != 'F' || s1[i] != 'f' || s1[i] != 'E' || s1[i] != 'e' || s1[i] != 'D' || s1[i] != 'd' || s1[i] != 'C' || 
-		s1[i] != 'c' || s1[i] != 'B' || s1[i] != 'b' || s1[i] != 'A' || s1[i] != 'a')) { 
-			printf("[Error] Your entered a wrong symbol: %c", tmp);
+		if (strchr(charset, str[i]) == NULL)
+		{
+			printf("[Error] Wrong input!\n%c isn`t supported!\n", str[i]);
 			abort();
 		}
 	}
-/*
-	*num1_ = strtod(str_, &endptr);
 
-	if (endptr == str_)
-	{
-		printf("[Error] in convertion string data type to double one, you entered wrong symbols!\n");
-		abort();
-	}
-	if (*endptr != '\0' && *endptr != str_)
-	{
-		printf("[Error] in convertion string data type to double one, some symbols you entered are wrong!\n");
-		abort();
-	}
-*/		
 	return 0;
 }
 
