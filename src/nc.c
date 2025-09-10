@@ -10,10 +10,10 @@ constexpr double max_d = 29999999999999992;
 
 double check(char* s0_, short* nc1_, short* nc2_, short* c1_, short* c2_, double* num1_)
 {
-	char tmp = '0';
+	int tmp = 0;
 	char* str = (char*)malloc(strlen(s0_));
 	const char charset[] = "0123456789ABCDEFabcdef";	// available symbols
-	char* endptr;
+	const char letters[] = "ABCDEFabcdef";
 
 	for (int i = 0; s0_[i] != '\0'; ++i) { 						// remove all spacing elements
 		if (!isspace(s0_[i])) { str[i] = s0_[i]; }
@@ -30,12 +30,51 @@ double check(char* s0_, short* nc1_, short* nc2_, short* c1_, short* c2_, double
 		abort();
 	}
 	
-	for (int i = 0; str[i] != '\0'; ++i)
+	for (int i = 0; str[i] != '\0'; ++i)						// check if every symbol is available
 	{
 		if (strchr(charset, str[i]) == NULL)
 		{
 			printf("[Error] Wrong input!\n%c isn`t supported!\n", str[i]);
 			abort();
+		}
+	}
+
+	for (int j = 0; str[j] != '\0'; ++j)						// check if symbols >= nc1
+	{
+		tmp = (int)str[j];										// take an ASCII code of a symbol
+		if (strchr(letters, str[j]) != NULL)
+		{
+			if (*nc1_ == 15 && (tmp == 70 || tmp == 102)) {
+				printf("[Error] This numeric system %d doesn`t support %c symbol!\n", *nc1_, str[j]);
+				abort();
+			}
+			if (*nc1_ == 14 && ((tmp >= 69 || tmp <= 70) || (tmp >= 101 || tmp <= 102))) {
+				printf("[Error] This numeric system %d doesn`t support %c symbol!\n", *nc1_, str[j]);
+				abort();
+			}
+			if (*nc1_ == 13 && ((tmp >= 68 || tmp <= 70) || (tmp >= 100 || tmp <= 102))) {
+				printf("[Error] This numeric system %d doesn`t support %c symbol!\n", *nc1_, str[j]);
+				abort();
+			}
+			if (*nc1_ == 12 && ((tmp >= 67 || tmp <= 70) || (tmp >= 99 || tmp <= 102))) {
+				printf("[Error] This numeric system %d doesn`t support %c symbol!\n", *nc1_, str[j]);
+				abort();
+			}
+			if (*nc1_ == 11 && ((tmp >= 66 || tmp <= 70) || (tmp >= 98 || tmp <= 102))) {
+				printf("[Error] This numeric system %d doesn`t support %c symbol!\n", *nc1_, str[j]);
+				abort();
+			}
+			if (*nc1_ == 10 && ((tmp >= 65 || tmp <= 70) || (tmp >= 97 || tmp <= 102))) {
+				printf("[Error] This numeric system %d doesn`t support %c symbol!\n", *nc1_, str[j]);
+				abort();
+			}
+		}
+		else {
+			char tmp_char = str[j];
+			if (atoi(&tmp_char) >= *nc1_) {
+				printf("[Error] This numeric system %d doesn`t support %c symbol!\n", *nc1_, str[j]);
+				abort();
+			}
 		}
 	}
 
@@ -61,7 +100,8 @@ int main()
 	printf("c1 %hd", c1);
 	printf("c2 %hd", c2);
 
-	printf("succes is %d", check(str, &nc1, &nc2, &c1, &c2, &num1));
+	check(str, &nc1, &nc2, &c1, &c2, &num1);
+
 /*
 	while (1)
 	{
